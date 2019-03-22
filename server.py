@@ -15,5 +15,31 @@ define("mysqlpassword",default="toor")
 
 
 
+class Database:
+
+    dbseting={
+        "host":'options.mysql_host',
+        'database':'options.mysqldatabase',
+        'user':'options.mysqkyser',
+        'password':'options.mysqlpassword',
+        'charset':'utf8'
+
+    }
+    db=torndb.Connection(**dbseting)
+
+
+
+    def insert():
+
+
+
 class BaseHandler(tornado.web.RequesHandler):
-    
+    database=Database.db
+
+    def check_api(self,api):
+        result=self.database.get("SELECT * FROM user WHERE api={}".format(api))
+
+    def check_userpass(self,username,password):
+        result=BaseHandler.database.get("SELECT * FROM user WHERE username=%s and password=%s ",username,password)
+
+
